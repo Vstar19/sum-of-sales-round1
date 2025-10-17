@@ -1,0 +1,51 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sales Summary 2025</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card">
+      <div class="card-body text-center">
+        <h1 class="card-title">Sales Summary 2025</h1>
+        <p class="card-text">The total sales for 2025 is: <strong id="total-sales">0.00</strong></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Data is embedded directly to avoid fetch/CORS issues.
+      const csvData = `Product,Sales
+Widget A,10.25
+Widget B,20.50
+Widget C,5.00
+Widget D,-5.00`;
+      
+      try {
+        const rows = csvData.split('\n').slice(1); // Skip header row
+        let totalSales = 0;
+
+        rows.forEach(row => {
+          const columns = row.split(',');
+          const sales = parseFloat(columns[1].trim());
+          if (!isNaN(sales)) {
+            totalSales += sales;
+          }
+        });
+
+        document.getElementById('total-sales').textContent = totalSales.toFixed(2);
+      } catch (error) {
+        console.error('An error occurred:', error);
+        const errorTarget = document.getElementById('total-sales');
+        errorTarget.textContent = 'Error: ' + error.message;
+        errorTarget.style.color = 'red';
+      }
+    });
+  </script>
+</body>
+</html>
+```
